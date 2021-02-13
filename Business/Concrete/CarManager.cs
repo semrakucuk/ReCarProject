@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Core.Utilities;
+using Core.Utilities.Constant;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -15,61 +18,50 @@ namespace Business.Concrete
         public CarManager(ICarDal calDal)
         {
             _calDal = calDal;
-        }
+        } 
 
-
-
-        public List<Car> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
-            return _calDal.GetAll();
-        }
-
-        public Car GetById(int id)
+            return new SuccessDataResult<List<Car>>(_calDal.GetAll(),true , Messages.CarListed);
+        } 
+        public IDataResult<Car> GetById(int id)
         {
-            return _calDal.Get(x => x.CarId == id);
-        }
-
-        public List<Car> GetByUnitPrice(decimal min, decimal max)
+            return new SuccessDataResult<Car>( _calDal.Get(x => x.CarId == id) ,true , Messages.CarListed);
+        } 
+        public IDataResult<List<Car>> GetByUnitPrice(decimal min, decimal max)
         {
-            return _calDal.GetAll(x => x.DailyPrice >= min && x.DailyPrice <= max);
-        }
-
-        public List<Car> GetOrByBrand(int id)
+            return new SuccessDataResult<List<Car>>(_calDal.GetAll(x => x.DailyPrice >= min && x.DailyPrice <= max), true, Messages.CarListed);
+        } 
+        public IDataResult<List<Car>> GetOrByBrand(int id)
         {
-            return _calDal.GetAll(x => x.BrandId == id);
-        }
-
-        public List<Car> GetOrByColor(int id)
+            return new SuccessDataResult<List<Car>>(_calDal.GetAll(x => x.BrandId == id),true);
+        } 
+        public IDataResult<List<Car>> GetOrByColor(int id)
         {
-            return _calDal.GetAll(x => x.ColorId == id);
+            return new SuccessDataResult<List<Car>>(_calDal.GetAll(x => x.ColorId == id),true);
         }
-        public void Add(Car car)
+        public IResult Add(Car car)
         {
-            if (car.DailyPrice > 0)
+            if (car.DailyPrice < 0)
             {
-                if (car.CarName.Length >= 2)
-                {
-                    _calDal.Add(car);
-                    Console.WriteLine("Yeni Kayıt Ekleme Başarılı");
-                }
-                else
-                {
-                    Console.WriteLine("Araba Adı en az iki karakterden oluşmalıdır.");
-                }
+                return new ErrorResult(Messages.CarDailyPriceInValid); 
             }
-            else
+            if (car.CarName.Length < 2)
             {
-                Console.WriteLine("Günlük Fiyat Sıfırdan büyük olmalı");
+                return new ErrorResult(Messages.CarNameInValid); 
             }
+            _calDal.Add(car);
+            return new SuccessResult( Messages.CarAdded );  
         }
 
-        public void Delete(Car car)
+        public IResult Delete(Car car)
         {
             _calDal.Delete(car);
             Console.WriteLine("Silme Başarılı");
+            return new SuccessResult();
         }
 
-        public void Update(Car car)
+        public IResult Update(Car car)
         {
             if (car.DailyPrice > 0)
             {
@@ -87,11 +79,12 @@ namespace Business.Concrete
             {
                 Console.WriteLine("Günlük Fiyat Sıfırdan büyük olmalı");
             }
+            return new SuccessResult();
         }
 
-        public List<CarDetailDto> GetCarDetail()
+        public IDataResult<List<CarDetailDto>> GetCarDetail()
         {
-            return _calDal.GetCarDetail();
-        }
+            return new SuccessDataResult<List<CarDetailDto>>(_calDal.GetCarDetail(), true);
+        } 
     }
 }

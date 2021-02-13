@@ -10,76 +10,100 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            // CarTest(); 
-            // ColorTest();
-            // BrandTest();
+            //CarTest();
+            //ColorTest();
+            //BrandTest();
+            //ColorTestAddUpdateDelete();
+            //GetCarDetailTest();
 
-            // ColorTestAddUpdateDelete();
 
-
-
-            CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var car in carManager.GetCarDetail())
-            {
-                Console.WriteLine(car.CarName + "  -  " + car.ColorName + "  -  " + car.BrandName + "  -  " + car.DailyPrice);
-            }
         }
 
+        private static void GetCarDetailTest()
+        {
+            CarManager carManager = new CarManager(new EfCarDal());
+            var result = carManager.GetCarDetail();
+            if (result.Success == true)
+            {
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine(car.CarName + "  -  " + car.ColorName + "  -  " + car.BrandName + "  -  " + car.DailyPrice);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+        } 
         private static void ColorTestAddUpdateDelete()
         {
             ColorManager colorManager = new ColorManager(new EfColorDal());
+            Color color = new Color()
+            {
+
+                ColorName = "KIRMIZI",
+                ColorId = 1,
+            };
+            colorManager.Update(color);
+
             //Color color = new Color()
             //{
-
-            //    ColorName = "KIRMIZI", 
-            //    ColorId = 1, 
-            //};
-            //colorManager.Update(color);
-
-            //Color color = new Color()
-            //{ 
-            //    ColorName = "GRİ", 
+            //    ColorName = "GRİ",
             //};
             //colorManager.Add(color);
 
             //Color color = new Color()
             //{
-            //    ColorId=1003
+            //    ColorId = 1003
             //};
             //colorManager.Delete(color);
-        }
-
+        } 
         private static void BrandTest()
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
-            //foreach (var brand in brandManager.GetAll())
+            //foreach (var brand in brandManager.GetAll().Data)
             //{
             //    Console.WriteLine(brand.BrandName);
             //}
-            Console.WriteLine(brandManager.GetById(3).BrandName);
+            Console.WriteLine(brandManager.GetById(3).Data.BrandName);
         }
         private static void ColorTest()
         {
             ColorManager colorManager = new ColorManager(new EfColorDal());
-            foreach (var color in colorManager.GetAll())
+            foreach (var color in colorManager.GetAll().Data)
             {
                 Console.WriteLine(color.ColorName);
             }
         } 
-        private       static void CarTest()
+        private static void CarTest()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var car in carManager.GetAll())
+            var result = carManager.GetAll();
+            if (result.Success == true)
             {
-                Console.WriteLine(car.CarName);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine(car.CarName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
 
-            //////Renk Kategorisine göre listeleme
-            //foreach (var car in carManager.GetOrByColor(3))
-            //{
-            //    Console.WriteLine(car.CarName);
-            //} 
-
+            ////Renk Kategorisine göre listeleme
+            result = carManager.GetOrByColor(3);
+            if (result.Success == true)
+            {
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine(car.CarName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
 
             ////Kayıt Ekleme
             Car car1 = new Car()
@@ -91,7 +115,7 @@ namespace ConsoleUI
                 ModelYear = "2016",
                 Description = "Mercedes 2006"
             };
-            carManager.Add(car1);
+            Console.WriteLine(carManager.Add(car1).Message);
 
             //////Id ye göre getirme
             //Console.WriteLine(carManager.GetById(2).CarName);
