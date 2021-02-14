@@ -16,11 +16,11 @@ namespace DataAccess.Concrete.InMemory
         {
             _cars = new List<Car>
             {
-                new Car{ CarId= 1 , CarName="a", BrandId=1 , ColorId=2 , DailyPrice= 100 , ModelYear= "2000" ,Description="2000 Model Araba"  },
-                 new Car{ CarId= 2, CarName="b",BrandId=1 , ColorId=2 , DailyPrice= 300 , ModelYear= "2002" ,Description="2002 Model Araba"  },
-                  new Car{ CarId= 3, CarName="c",BrandId=2 , ColorId=2 , DailyPrice= 500 , ModelYear= "2002" ,Description="2002 Model Araba"  },
-                   new Car{ CarId= 4, CarName="d",BrandId=2 , ColorId=2 , DailyPrice= 800 , ModelYear= "2003" ,Description="2003 Model Araba"  },
-                    new Car{ CarId= 5, CarName="e",BrandId=1 , ColorId=2 , DailyPrice= 1000 , ModelYear= "2006" ,Description="2006 Model Araba"  }
+                new Car{ CarId= 1 , CarName="a", BrandId=1 , ColorId=2 , DailyPrice= 100 , ModelYear= 2000 ,Description="2000 Model Araba"  },
+                 new Car{ CarId= 2, CarName="b",BrandId=1 , ColorId=2 , DailyPrice= 300 , ModelYear= 2002 ,Description="2002 Model Araba"  },
+                  new Car{ CarId= 3, CarName="c",BrandId=2 , ColorId=2 , DailyPrice= 500 , ModelYear= 2002 ,Description="2002 Model Araba"  },
+                   new Car{ CarId= 4, CarName="d",BrandId=2 , ColorId=2 , DailyPrice= 800 , ModelYear= 2003 ,Description="2003 Model Araba"  },
+                    new Car{ CarId= 5, CarName="e",BrandId=1 , ColorId=2 , DailyPrice= 1000 , ModelYear= 2006 ,Description="2006 Model Araba"  }
             };
         }
 

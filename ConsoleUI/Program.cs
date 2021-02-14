@@ -10,13 +10,33 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            //CarTest();
+            // CarTest();
             //ColorTest();
             //BrandTest();
             //ColorTestAddUpdateDelete();
             //GetCarDetailTest();
+            // NewUserTest();
 
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            rentalManager.Add(new Rental
+            {
+                CarId = 1,
+                CustomerId=2,
+                RentDate=DateTime.Now, 
+            }); 
+        }
 
+        private static void NewUserTest()
+        {
+            UserManager userManager = new UserManager(new EfUserDal());
+            User user1 = new User()
+            {
+                Email = "semrakucuk97@gmail.com",
+                Password = "*123*",
+                FirstName = "Semra",
+                LastName = "KÜÇÜK"
+            };
+            Console.WriteLine(userManager.Add(user1).Message);
         }
 
         private static void GetCarDetailTest()
@@ -92,30 +112,30 @@ namespace ConsoleUI
             }
 
             ////Renk Kategorisine göre listeleme
-            result = carManager.GetOrByColor(3);
-            if (result.Success == true)
-            {
-                foreach (var car in result.Data)
-                {
-                    Console.WriteLine(car.CarName);
-                }
-            }
-            else
-            {
-                Console.WriteLine(result.Message);
-            }
+            //result = carManager.GetOrByColor(3);
+            //if (result.Success == true)
+            //{
+            //    foreach (var car in result.Data)
+            //    {
+            //        Console.WriteLine(car.CarName);
+            //    }
+            //}
+            //else
+            //{
+            //    Console.WriteLine(result.Message);
+            //}
 
             ////Kayıt Ekleme
-            Car car1 = new Car()
-            {
-                CarName = "Mercedes",
-                BrandId = 3,
-                ColorId = 2,
-                DailyPrice = 1000,
-                ModelYear = "2016",
-                Description = "Mercedes 2006"
-            };
-            Console.WriteLine(carManager.Add(car1).Message);
+            //Car car1 = new Car()
+            //{
+            //    CarName = "Mercedes",
+            //    BrandId = 3,
+            //    ColorId = 2,
+            //    DailyPrice = 1000,
+            //    ModelYear = "2016",
+            //    Description = "Mercedes 2006"
+            //};
+            //Console.WriteLine(carManager.Add(car1).Message);
 
             //////Id ye göre getirme
             //Console.WriteLine(carManager.GetById(2).CarName);
