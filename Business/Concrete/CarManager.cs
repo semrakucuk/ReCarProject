@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConserns.Validation.FluentValidation;
 using Core.Utilities;
 using Core.Utilities.Constant;
 using Core.Utilities.Results;
@@ -40,16 +43,10 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<Car>>(_calDal.GetAll(x => x.ColorId == id),true);
         }
+
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
-            if (car.DailyPrice < 0)
-            {
-                return new ErrorResult(Messages.CarDailyPriceInValid); 
-            }
-            if (car.CarName.Length < 2)
-            {
-                return new ErrorResult(Messages.CarNameInValid); 
-            }
             _calDal.Add(car);
             return new SuccessResult( Messages.CarAdded );  
         }
