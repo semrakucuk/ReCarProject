@@ -46,5 +46,7 @@ namespace Core.Utilities.Constant
         public static string UserDeleted = "  silindi.";
         public static string UserUpdated = "  güncellendi.";
         public static string UserListed = "  Listelendi.";
+
+        public static string CarImageLimitExceeded = " en fazla 5 adet eklenebilir.";
     }
 }

@@ -25,23 +25,23 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetAll()
         {
-            return new SuccessDataResult<List<Car>>(_calDal.GetAll(),true , Messages.CarListed);
+            return new SuccessDataResult<List<Car>>(_calDal.GetAll(),  Messages.CarListed);
         } 
         public IDataResult<Car> GetById(int id)
         {
-            return new SuccessDataResult<Car>( _calDal.Get(x => x.CarId == id) ,true , Messages.CarListed);
+            return new SuccessDataResult<Car>( _calDal.Get(x => x.CarId == id) , Messages.CarListed);
         } 
         public IDataResult<List<Car>> GetByUnitPrice(decimal min, decimal max)
         {
-            return new SuccessDataResult<List<Car>>(_calDal.GetAll(x => x.DailyPrice >= min && x.DailyPrice <= max), true, Messages.CarListed);
+            return new SuccessDataResult<List<Car>>(_calDal.GetAll(x => x.DailyPrice >= min && x.DailyPrice <= max), Messages.CarListed);
         } 
         public IDataResult<List<Car>> GetOrByBrand(int id)
         {
-            return new SuccessDataResult<List<Car>>(_calDal.GetAll(x => x.BrandId == id),true);
+            return new SuccessDataResult<List<Car>>(_calDal.GetAll(x => x.BrandId == id));
         } 
         public IDataResult<List<Car>> GetOrByColor(int id)
         {
-            return new SuccessDataResult<List<Car>>(_calDal.GetAll(x => x.ColorId == id),true);
+            return new SuccessDataResult<List<Car>>(_calDal.GetAll(x => x.ColorId == id));
         }
 
         [ValidationAspect(typeof(CarValidator))]
@@ -81,7 +81,7 @@ namespace Business.Concrete
 
         public IDataResult<List<CarDetailDto>> GetCarDetail()
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_calDal.GetCarDetail(), true);
+            return new SuccessDataResult<List<CarDetailDto>>(_calDal.GetCarDetail());
         } 
     }
 }

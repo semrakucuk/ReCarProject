@@ -31,13 +31,13 @@ namespace Business.Concrete
 
         public IDataResult<List<User>> GetAll()
         {
-            return new SuccessDataResult<List<User>>(_userDal.GetAll(), true , Messages.UserListed);
+            return new SuccessDataResult<List<User>>(_userDal.GetAll() , Messages.UserListed);
  
         }
 
         public IDataResult<User> GetById(int id)
         {
-            return new SuccessDataResult<User>(_userDal.Get(u => u.UserId == id), true, Messages.UserListed);
+            return new SuccessDataResult<User>(_userDal.Get(u => u.UserId == id), Messages.UserListed);
         }
 
         public IResult Update(User user)
