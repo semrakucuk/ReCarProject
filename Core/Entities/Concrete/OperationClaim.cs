@@ -3,6 +3,6 @@
     public class OperationClaim : IEntity
     {
         public int OperationClaimId { get; set; }
-        public int Name { get; set; }
+        public string Name { get; set; }
     } 
 }
