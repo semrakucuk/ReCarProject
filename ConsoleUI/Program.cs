@@ -28,15 +28,15 @@ namespace ConsoleUI
 
         private static void NewUserTest()
         {
-            UserManager userManager = new UserManager(new EfUserDal());
-            User user1 = new User()
-            {
-                Email = "semrakucuk97@gmail.com",
-                Password = "*123*",
-                FirstName = "Semra",
-                LastName = "KÜÇÜK"
-            };
-            Console.WriteLine(userManager.Add(user1).Message);
+            //UserManager userManager = new UserManager(new EfUserDal());
+            //User user1 = new User()
+            //{
+            //    Email = "semrakucuk97@gmail.com",
+            //    Password = "*123*",
+            //    FirstName = "Semra",
+            //    LastName = "KÜÇÜK"
+            //};
+            //Console.WriteLine(userManager.Add(user1).Message);
         }
 
         private static void GetCarDetailTest()

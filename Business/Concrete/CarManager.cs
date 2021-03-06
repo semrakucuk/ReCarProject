@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConserns.Validation.FluentValidation;
@@ -44,6 +45,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_calDal.GetAll(x => x.ColorId == id));
         }
 
+        [SecuredOperation("product.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {

@@ -1,19 +1,13 @@
-using Business.Abstract;
-using Business.Concrete;
-using DataAccess.Abstract;
-using DataAccess.Concrete.EntityFramework;
+using Core.Utilities.Security.Encyption;
+using Core.Utilities.Security.JWT;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
 
 namespace WebAPI
 {
@@ -31,23 +25,26 @@ namespace WebAPI
         {
             services.AddControllers();
 
-            //services.AddSingleton<IColorService, ColorManager>();
-            //services.AddSingleton<IColorDal, EfColorDal>();
 
-            //services.AddSingleton<IBrandService, BrandManager>();
-            //services.AddSingleton<IBrandDal, EfBrandDal>();
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            //services.AddSingleton<ICarService, CarManager>();
-            //services.AddSingleton<ICarDal, EfCarDal>();
+            var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
-            //services.AddSingleton<ICustomerService, CustomerManager>();
-            //services.AddSingleton<ICustomerDal, EfCustomerDal>();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidIssuer = tokenOptions.Issuer,
+                        ValidAudience = tokenOptions.Audience,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
+                    };
+                });
 
-            //services.AddSingleton<IUserService, UserManager>();
-            //services.AddSingleton<IUserDal, EfUserDal>();
-
-            //services.AddSingleton<IRentalService, RentalManager>();
-            //services.AddSingleton<IRentalDal, EfRentalDal>();
 
         }
 
@@ -62,6 +59,8 @@ namespace WebAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

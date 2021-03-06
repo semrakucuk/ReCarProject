@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Entities.Concrete;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -47,6 +48,14 @@ namespace Core.Utilities.Constant
         public static string UserUpdated = "  güncellendi.";
         public static string UserListed = "  Listelendi.";
 
-        public static string CarImageLimitExceeded = " en fazla 5 adet eklenebilir.";
+        public static string CarImageLimitExceeded = " En fazla 5 adet eklenebilir.";
+
+        public static string AuthorizationDenied = "Yetkin yok";
+        public static string SuccessfulLogin="Başarılı giriş";
+        public static string UserRegistered="Kayıt oldu";
+        public static string UserAlreadyExists = "Kullanıcı mevcut";
+        public static string UserNotFound="Kullanıcı bulunamadı";
+        public static string PasswordError = "Parola hatası"; 
+        public static string AccessTokenCreated = "Token oluşturuldu";
     }
 }
